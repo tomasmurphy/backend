@@ -1,0 +1,26 @@
+[
+    {
+        "code": 1,
+        "price": 100,
+        "title": "Un producto",
+        "description": "Esto es un producto",
+        "thumbnail": "Esto es una foto",
+        "Stock": 80000
+    },
+    {
+        "code": 2,
+        "price": 200,
+        "title": "Otro producto",
+        "description": "Esto es otro producto",
+        "thumbnail": "Esto es una foto",
+        "Stock": 1
+    },
+    {
+        "code": 3,
+        "price": 200,
+        "title": "Otro producto",
+        "description": "Esto es otro producto",
+        "thumbnail": "Esto es una foto",
+        "Stock": 1
+    }
+]

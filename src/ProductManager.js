@@ -1,6 +1,5 @@
-// SEGUNDA ENTREGA 
-const fs = require('fs')
-const { existsSync } = require('fs');
+import { writeFile, readFile } from 'fs/promises';
+import { existsSync } from 'fs';
 
 class ProductManager {
     constructor(path){
@@ -106,3 +105,4 @@ class ProductManager {
     }
 }
 
+export default ProductManager;
