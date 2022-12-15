@@ -3,12 +3,11 @@ import ProductManager from './ProductManager.js'
 
     
 const app = express();
-
+let productManager = new ProductManager('./src/data/products.json');
 
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/products', async (req, res)  => {
-    let productManager = new ProductManager('./src/data/products.json');
     let products =  await productManager.getProducts()
     let limit = req.query.limit;
     if(!limit) return res.send({products})
@@ -19,7 +18,6 @@ app.get('/products', async (req, res)  => {
 })
 app.get('/products/:pid', async (req, res) => {
     let pid = req.params.pid;
-    let productManager = new ProductManager('./src/data/products.json');
     let products =  await productManager.getProducts()
     let product =  products.find(p => p.id == pid);
     
