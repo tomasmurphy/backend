@@ -9,12 +9,24 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/products', async (req, res)  => {
     let productManager = new ProductManager('./src/data/products.json');
+    let products =  await productManager.getProducts()
+    let limit = req.query.limit;
+    if(!limit) return res.send({products})
 
-    res.send(await productManager.getProducts())
+    let productLimit =  products.filter((product, indice) => indice < limit );
+    
+    res.send({productLimit})
 })
-app.get('/consultas', (req, res) => {
-    let consultas = ["a", "b", "c"];
-    res.send(consultas)
+app.get('/products/:pid', async (req, res) => {
+    let pid = req.params.pid;
+    let productManager = new ProductManager('./src/data/products.json');
+    let products =  await productManager.getProducts()
+    let product =  products.find(p => p.id == pid);
+    
+    if (!product) return res.send( 'No existe ese ID')
+
+    res.send({product})
 });
+
 
 app.listen(8080, () => console.log("Servidor andando"))

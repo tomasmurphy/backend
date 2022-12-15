@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "code": 1,
         "price": 100,
         "title": "Un producto",
@@ -8,6 +9,7 @@
         "Stock": 80000
     },
     {
+        "id": 2,
         "code": 2,
         "price": 200,
         "title": "Otro producto",
@@ -16,6 +18,7 @@
         "Stock": 1
     },
     {
+        "id": 3,
         "code": 3,
         "price": 200,
         "title": "Otro producto",
