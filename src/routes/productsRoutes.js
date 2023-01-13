@@ -8,7 +8,7 @@ let productManager = new ProductManager('./src/data/products.json');
 
 // CREATE PRODUCT 
 productsRoutes.post('', uploader.array('thumbnail'), async (req, res) => {
-    let product = req.body
+    let product = req.body 
     let thumbnail = req.files ? (req.files.map(file => `/img/${file.originalname}`)) : [];
     let statusProduct = (product.status) ? product.status.toLowerCase()==="true"? true:false : true
     let productJson = { 

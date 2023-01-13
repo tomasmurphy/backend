@@ -59,7 +59,7 @@ class CartManager {
 
     async addProductToCart(cid, pid, quantity) {
         try {
-            const productExist = await productManager.getProductById(+(pid))
+            const productExist = await productManager.getProductById(+pid)
             if (productExist === `there is no product with id:${pid}`) {
                 throw new Error(`there is no product with id:${pid}`)
             }
@@ -72,8 +72,12 @@ class CartManager {
             else {
                 const targetProduct = await targetCart.products.find(product => product.product == pid)
                 const updatedProduct = targetProduct ? { product: targetProduct.product, quantity: (targetProduct.quantity + +(quantity)) }
-                    : { product: pid, quantity: +(quantity) }
-
+                    : { product: pid, quantity: +quantity }
+                    
+                    if (productExist.stock < quantity) {
+                        throw new Error(`there is not enough quantity of the product:${productExist.id}`)
+                    }   
+                    productManager.updateProduct(productExist.id, {stock: productExist.stock-quantity})
                 const targetCartFilter = await targetCart.products.filter(id => id.product !== pid)
                 const updatedCart = { ...targetCart, products: [...targetCartFilter, updatedProduct] }
                 const updatedList = savedCarts.map(cart => {

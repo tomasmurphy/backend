@@ -5,7 +5,7 @@
 		"description": "Una pileta",
 		"code": "1",
 		"price": 1000,
-		"stock": 155,
+		"stock": 0,
 		"status": true,
 		"category": "piletas",
 		"thumbnail": [
@@ -18,7 +18,7 @@
 		"description": "Un placard",
 		"code": "2",
 		"price": 10000,
-		"stock": 2,
+		"stock": 0,
 		"status": true,
 		"category": "placares",
 		"thumbnail": [
@@ -137,5 +137,18 @@
 		"thumbnail": [
 			"/img/300x200x65.jpg"
 		]
+	},
+	{
+		"id": 11,
+		"title": "15",
+		"description": "15",
+		"code": "15",
+		"price": 15,
+		"stock": 15,
+		"category": "15",
+		"thumbnail": [
+			"/img/CE044540-8BEB-4CBE-B203-82788503DABB.PNG"
+		],
+		"status": true
 	}
 ]
