@@ -3,9 +3,12 @@ import productModel from '../models/productModel.js'
 
 class ProductManagerMongo {
     
-    async getProducts() {
+    async getProducts( page, limit, order, available, category) {
+        
         try {
-            const products = await productModel.find()
+            const products = await productModel.paginate(
+                {"stock": available, category: category},
+                {page: page,limit: limit, sort: order})
             return products
         } catch (error) {
             throw new Error(error.message)

@@ -1,16 +1,20 @@
 import { Router } from "express";
 import ProductManager from '../daos/filesManager/ProductManager.js';
 import { uploader } from "../utils.js";
+import ProductManagerMongo from "../daos/mongoManager/mongoProductManager.js";
+import CartManagerMongo from "../daos/mongoManager/mongoCartManager.js";
 
 const viewsRoutes = Router();
 let productManager = new ProductManager('./src/data/products.json');
+const productMongoService = new ProductManagerMongo()
+const cartMongoService = new CartManagerMongo()
 
 viewsRoutes.get('/home', async (req, res) => {
-    const products = await productManager.getProducts()
+    const products = await productMongoService.getProducts(1,10,"")
     const limit = req.query.limit
     if (!limit) {
         return res.render('home', {
-            products: products,
+            products: products.docs.map(product => product.toJSON()),
             title: 'Products'
         })
     }
@@ -22,11 +26,11 @@ viewsRoutes.get('/home', async (req, res) => {
 })
 
 viewsRoutes.get('/realtimeproducts', async (req, res) => {
-    const products = await productManager.getProducts()
+    const products = await productMongoService.getProducts(1,10,"")
     const limit = req.query.limit
     if (!limit) {
         return res.render('realTimeProducts', {
-            products: products,
+            products: products.docs.map(product => product.toJSON()),
             title: 'Real Time Products'
         })
     }
@@ -71,5 +75,21 @@ viewsRoutes.get('/chat', (req, res) => {
     res.render('chat', {})
 })
 
+viewsRoutes.get('/cart/:cid', async (req, res) => {
+    const cartId = req.params.cid 
+    try {
+        const cart = await cartMongoService.getCartById(cartId)
+        res.render('cart', {
+            title: "Cart",
+            products: cart.products,
+            cartId: cart._id
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: "error",
+            error: error.message
+        })
+    }
+})
 
 export default viewsRoutes

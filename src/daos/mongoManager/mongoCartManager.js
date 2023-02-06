@@ -1,8 +1,10 @@
 import cartModel from '../models/cartModel.js'
+import productModel from '../models/productModel.js';
 
 
 class CartManagerMongo {
 
+     
     async getCarts() {
         try {
             const carts = await cartModel.find()
@@ -14,7 +16,7 @@ class CartManagerMongo {
 
     async getCartById(id) {
         try {
-            const cart = await cartModel.findById(id)
+            const cart = await cartModel.findById(id).lean()
             if (!cart) {
                 throw new Error('ERROR: no product matches the specified ID')
             }

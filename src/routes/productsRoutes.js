@@ -34,21 +34,23 @@ productsRoutes.post('', uploader.array('thumbnail'), async (req, res) => {
 
 // READ PRODUCTS 
 productsRoutes.get('/', async (req, res) => {
-    const limit = req.query.limit
+    const { page, limit, order, available, category } = req.query
+    const nroPage = page?+page:1
+    const nroLimit = limit?+limit:10
+    const orderDirection = order?{price:order}:""
+    const isAvailable = available?{$gt:1}:""
+    const whitchCategory = category?category:""
+    
     try {
-        const products = await productMongoService.getProducts()
-        if (!limit) {
-            return res.send({
-                status: 'success',
-                data: products
-            })
-        }
-        const limitedProducts = products.slice(0, limit)
-        res.send({
+        const products = await productMongoService.getProducts(nroPage,nroLimit, orderDirection, isAvailable, whitchCategory)
+
+        return res.send({
             status: 'success',
-            data: limitedProducts
+            data: products
+
         })
-    } catch (error) {
+    }
+    catch (error) {
         res.status(500).send({
             status: "error",
             error: error.message
